@@ -3,13 +3,13 @@
 Win95-themed Hugo theme for my website.
 
 ## get started
+<!-- cp themes/qugo/static/style.css static/ -->
 
 ```sh
 hugo new site new-site
 cd new-site
-git clone https://github.com/lukesmithxyz/lugo themes/lugo
-echo "theme = 'lugo'" >> config.toml
-cp themes/lugo/static/style.css static/
+git clone https://github.com/Andrmist/qugo themes/qugo
+echo "theme = 'qugo'" >> config.toml
 ```
 
 ## stuff
