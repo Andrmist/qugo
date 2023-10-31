@@ -1,36 +1,61 @@
 <!DOCTYPE html>
 <html lang="{{ .Site.Language }}">
-<head>
-	<title>{{ if not .IsHome }}{{ .Title | title }} | {{ end }}{{ .Site.Title }}</title>
-	<link rel="canonical" href="{{ .Site.BaseURL }}">
-	<link rel='alternate' type='application/rss+xml' title="{{ .Site.Title }} RSS" href='/index.xml'>
-	<link rel='stylesheet' type='text/css' href='/style.css'>
-	{{ with .Site.Params.favicon }}<link rel="icon" href="{{ . }}">
-	{{ end -}}
-	<meta name="description" content="{{ with .Params.description }}{{ . }}{{ else }}{{ .Summary }}{{ end }}">
-	{{ if isset .Params "tags" }}<meta name="keywords" content="{{ with .Params.tags }}{{ delimit . ", " }}{{ end }}">
-	{{ end -}}
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="robots" content="index, follow">
-	<meta charset="utf-8">
-</head>
-<body>
-{{ if .Site.Menus.main }}{{ partial "nav.html" . }}{{ end -}}
-<main>
-<header><h1 id="tag_{{ .Title }}">{{ block "title" . }}{{ end }}</h1></header>
-<article>
-{{ block "main" . }}
-{{ .Content }}
-{{ end }}
-{{ if .Param "nextprev" }}{{ partial "nextprev.html" . -}}{{ end -}}
-{{ if .Param "taglist" }}{{ partial "taglist.html" . }}{{ end -}}
-</article>
-</main>
-{{ block "footer" . }}
-<footer>
-	<a href="{{ .Site.BaseURL }}">{{ .Site.BaseURL }}</a>
-	{{- if .Param "showrss" }}<br><br><a href="/index.xml"><img src="/rss.svg" style="max-height:1.5em" alt="RSS Feed" title="Subscribe via RSS for updates."></a>{{ end }}
-</footer>
-{{ end }}
-</body>
+	<head>
+		<title>{{ if not .IsHome }}{{ .Title | title }} | {{ end }}{{ .Site.Title }}</title>
+		<link rel="canonical" href="{{ .Site.BaseURL }}">
+		<link rel='alternate' type='application/rss+xml' title="{{ .Site.Title }} RSS" href='/index.xml'>
+		<link rel='stylesheet' type='text/css' href='/style.css'>
+		{{ with .Site.Params.favicon }}<link rel="icon" href="{{ . }}">
+		{{ end -}}
+		<meta name="description" content="{{ with .Params.description }}{{ . }}{{ else }}{{ .Summary }}{{ end }}">
+		{{ if isset .Params "tags" }}<meta name="keywords" content="{{ with .Params.tags }}{{ delimit . ", " }}{{ end }}">
+		{{ end -}}
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="robots" content="index, follow">
+		<meta charset="utf-8">
+	</head>
+	<body>
+		<header class="page_title">
+			<span class="page_title_name">Qugalet</span>
+			<div class="page_title_buttons">
+				<button>X</button>
+				{{- if .Param "showrss" }}<a href="/index.xml"></a>{{ end }}
+			</div>
+		</header>
+		<main>
+			<div class="sidebar">
+				{{ if .Site.Menus.main }}{{ partial "nav.html" . }}{{ end -}}
+			</div>
+			<article>
+				<header>
+					<h1 id="tag_{{ .Title }}">{{ block "title" . }}{{ end }}</h1>
+					<center><b>{{ .Date.Format "2 Jan 2006" }}</b></center>
+				</header>
+				{{ block "main" . }}
+				{{ .Content }}
+				{{ end }}
+				{{ if .Param "nextprev" }}{{ partial "nextprev.html" . -}}{{ end -}}
+			</article>
+			<div class="sidebar">
+				{{ if .Param "taglist" }}
+				{{ partial "taglist.html" . }}
+				{{ end -}}
+				{{ block "footer" . }}
+				<footer>
+					<b>fediring</b>
+					<a href="https://fediring.net/random">random</a>
+					<a href="https://fediring.net/previous?host=quga.m0e.space">previous</a>
+					<a href="https://fediring.net/next?host=quga.m0e.space">next</a>
+					<b>buttons</b>
+					<a href="https://udongein.xyz"><img src="/buttons/udongein.png" alt="praise naiji" /></a>
+					<a href="https://fedoraproject.org"><img src="/buttons/fedora.gif" alt="fedora" /></a>
+					<a href="https://archlinux.org"><img src="/buttons/archlinux.gif" alt="archlinux" /></a>
+					<img src="/buttons/beekeeping_in_ukraine.gif" alt="Бджільництво України" />
+					<a href="https://joinfediverse.wiki"><img src="/buttons/neo-fedi.gif" alt="archlinux" /></a>
+					<!-- <a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a> -->
+				</footer>
+				{{ end }}
+			</div>
+		</main>
+	</body>
 </html>
