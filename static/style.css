@@ -3,8 +3,13 @@
   src: url("CozetteVector.ttf") format("truetype");
 }
 
+/* img {image-rendering: pixelated;} */
+
 body {
   font-family: "Cozette", sans-serif;
+  font-size: 14pt;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
   /* background: #110000; */
   /* color: #ccc; */
   background-image: url("back.png");
@@ -120,6 +125,11 @@ ul.link_list > li {
   width: 100%;
 }
 
+ul.link_list > li.tag {
+  margin-top: 4px;
+  width: 100%;
+}
+
 ul.link_list > li > a {
   width: 100%;
   text-decoration: none;
@@ -132,6 +142,14 @@ ul.link_list > li > a {
   user-select: none;
 }
 
+ul.link_list > li.tag > a {
+  color: blue;
+}
+
+a {
+  color: blue;
+}
+
 img {
   max-width: 100%;
 }
@@ -139,6 +157,10 @@ img {
 header h1 {
   text-align: center;
 }
+
+h3 {font-size:26px;}
+h2 {font-size:39px;}
+h1 {font-size:52px;}
 
 footer {
   padding: 5px;

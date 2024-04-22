@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ .Site.Language }}">
+<html lang="{{ .Site.Language.Lang }}">
 	<head>
 		<title>{{ if not .IsHome }}{{ .Title | title }} | {{ end }}{{ .Site.Title }}</title>
 		<link rel="canonical" href="{{ .Site.BaseURL }}">
@@ -13,12 +13,18 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<meta name="robots" content="index, follow">
 		<meta charset="utf-8">
+    {{ if .IsTranslated }}
+    {{ range .Translations }}
+    <link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}">
+    {{ end }}
+    <link rel="alternate" hreflang="{{ .Language.Lang }}" href="{{ .Permalink }}">
+    {{ end }}
 	</head>
 	<body>
 		<header class="page_title">
 			<span class="page_title_name">Qugalet</span>
 			<div class="page_title_buttons">
-				<button>X</button>
+				<a href="{{ .Site.BaseURL }}">X</a>
 				{{- if .Param "showrss" }}<a href="/index.xml"></a>{{ end }}
 			</div>
 		</header>
@@ -29,14 +35,31 @@
 			<article>
 				<header>
 					<h1 id="tag_{{ .Title }}">{{ block "title" . }}{{ end }}</h1>
-					<center><b>{{ .Date.Format "2 Jan 2006" }}</b></center>
+          {{ if not (eq .Params.showthedate "false") }}
+          <center><time>{{ .Date | time.Format ":date_full" }}</time></center>
+          <!-- {{- with $.Page.Params.LastMod }} -->
+          <!-- dick -->
+          <!-- <center><time>{{ $.Page.Params.LastMod | time.Format ":date_full" }}</time></center> -->
+          <!-- {{- end }} -->
+          {{ end }}
 				</header>
 				{{ block "main" . }}
+        <!-- <p>{{ .Params.description }}</p> -->
 				{{ .Content }}
 				{{ end }}
 				{{ if .Param "nextprev" }}{{ partial "nextprev.html" . -}}{{ end -}}
 			</article>
 			<div class="sidebar">
+        {{ if .IsTranslated }}
+        <nav>
+        <ul class="link_list">
+          Translations:
+          {{ range .Translations }}
+          <li class="tag"><a href="{{ .Permalink }}">{{ .Site.Language.LanguageName }}</a></li>
+          {{ end }}
+        </ul>
+        </nav>
+        {{ end -}}
 				{{ if .Param "taglist" }}
 				{{ partial "taglist.html" . }}
 				{{ end -}}
@@ -55,13 +78,6 @@
 					<img src="{{ .img }}" alt="{{ .alt }}" />
 					{{ end }}
 					{{- end }}
-					<!-- <a href="https://m0e.space"><img src="/buttons/m0espace.png" alt="praise naiji" /></a>
-						 <a href="https://udongein.xyz"><img src="/buttons/udongein.png" alt="praise naiji" /></a>
-						 <a href="https://fedoraproject.org"><img src="/buttons/fedora.gif" alt="fedora" /></a>
-						 <a href="https://archlinux.org"><img src="/buttons/archlinux.gif" alt="archlinux" /></a>
-						 <img src="/buttons/beekeeping_in_ukraine.gif" alt="Бджільництво України" />
-						 <a href="https://joinfediverse.wiki"><img src="/buttons/neo-fedi.gif" alt="archlinux" /></a> -->
-					<!-- <a href="{{ .Site.BaseURL }}">{{ .Site.Title }}</a> -->
 					{{- end }}
 				</footer>
 				{{ end }}
